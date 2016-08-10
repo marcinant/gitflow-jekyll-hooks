@@ -4,11 +4,63 @@
 #+EMAIL: marcin.antczak@neutrico.eu
 #+CATEGORY: Web Development
 
-* Some useful hooks for [git-flow (AVH Edition)][fn:1]
+* Some useful hooks for [[https://github.com/petervanderdoes/gitflow][GitFlow AVH Edition]]
   :PROPERTIES:
   :CREATED:  [2016-08-10 Wed 23:04]
   :END:
 
-* Footnotes
+** What does it do?
+   :PROPERTIES:
+   :CREATED:  [2016-08-10 Wed 23:32]
+   :END:
 
-[fn:1][[https://github.com/petervanderdoes/gitflow][GitFlow]]
+   - Prevent direct commits to the master branch.
+   - Prevent merge marker commits.
+   - Automatically bump versions when starting a release or hotfix. Versions are generated, written to file and committed.
+   - Automatically specify tag messages.
+
+
+** Usage
+   :PROPERTIES:
+   :CREATED:  [2016-08-10 Wed 23:33]
+   :END:
+
+*** Install
+    :PROPERTIES:
+    :CREATED:  [2016-08-10 Wed 23:33]
+    :END:
+
+    Clone this repository somewhere on your disk.
+
+    #+BEGIN_SRC sh
+      mkdir -p /path/to/your/clones
+      cd /path/to/your/clones
+
+      git clone git@github.com:marcinant/gitflow-jekyll-hooks .
+    #+END_SRC
+
+*** Activate
+    :PROPERTIES:
+    :CREATED:  [2016-08-10 Wed 23:34]
+    :END:
+    
+**** New project
+     :PROPERTIES:
+     :CREATED:  [2016-08-10 Wed 23:35]
+     :END:
+
+     #+BEGIN_SRC sh
+       gem install jekyll
+       jekyll new myproject
+       cd myproject
+
+       git init --template /path/to/your/clones/gitflow-jekyll-hooks/
+
+       CLOCK=in git checkout develop
+     #+END_SRC
+     
+
+**** Existing project
+     :PROPERTIES:
+     :CREATED:  [2016-08-10 Wed 23:35]
+     :END:
