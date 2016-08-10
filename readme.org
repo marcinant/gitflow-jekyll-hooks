@@ -1,0 +1,14 @@
+#+TITLE: git-flow-jekyll-hooks
+#+LANGUAGE: en
+#+AUTHOR: Marcin Antczak
+#+EMAIL: marcin.antczak@neutrico.eu
+#+CATEGORY: Web Development
+
+* Some useful hooks for [git-flow (AVH Edition)][fn:1]
+  :PROPERTIES:
+  :CREATED:  [2016-08-10 Wed 23:04]
+  :END:
+
+* Footnotes
+
+[fn:1][[https://github.com/petervanderdoes/gitflow][GitFlow]]
