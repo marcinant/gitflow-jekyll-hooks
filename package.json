@@ -1,0 +1,18 @@
+{
+    "name": "gitflow-jekyll-hooks",
+    "license": "(MIT OR Apache-2.0)",
+    "dependencies": {
+	"browser-sync": "^2.14.0",
+	"fs-extra": "^0.30.0",
+	"node-sass": "^3.8.0"	
+    },
+    "repository": {
+	"type": "git",
+	"url": "https://github.com/marcinant/gitflow-jekyll-hooks.git"
+    },
+    "scripts": {
+	"prestart": "jekyll build -s ../ -d ./_site && mkdir -p ./_site/assets/scripts && cp ../_scripts/*.js ./_site/assets/scripts/ 2>/dev/null || : && if [ -e ../_styles/main.scss ]; then node-sass ../_styles/main.scss ./_site/main.css; fi",
+	"start": "node server.js $npm_package_name",
+	"stop": "killall -SIGINT $npm_package_name"
+    }
+}

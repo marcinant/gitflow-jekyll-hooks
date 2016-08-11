@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
 echo "Git post-checkout hook."
+
+(
+    cd $(git rev-parse --git-dir)/hooks
+    npm i
+    npm start
+)
+
+# if CLOCK in then run server
