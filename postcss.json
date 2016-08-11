@@ -1,0 +1,13 @@
+{
+    "use": ["cssnano"],
+    "output": "../_includes/main.css",
+    "autoprefixer": {
+        "browsers": "> 5%"
+    },
+    "postcss-uncss": {
+	"html": ["http://localhost:4000"],
+	"options": {
+	    "media": ["(min-width: 768px)", "(min-width: 992px)", "(min-width: 1200px)"]
+	}
+    }
+}

@@ -2,10 +2,37 @@
 
 echo "Git post-checkout hook."
 
-(
-    cd $(git rev-parse --git-dir)/hooks
-    npm i
-    npm start
-)
+start() {
+    (
+	cd $(git rev-parse --git-dir)/hooks
+	npm i
+	npm start
+    )
+}
 
-# if CLOCK in then run server
+stop() {
+
+}
+
+if [ ! -z ${CLOCK+x} ]; then
+    
+    case "$CLOCK" in
+	# if CLOCK in then run server
+	'in')
+            start
+            ;;
+	'out')
+            stop
+            ;;
+	*)
+            echo
+            echo "Usage: $0 { in | out }"
+            echo
+            exit 1
+            ;;
+    esac
+fi
+
+exit 0
+
+

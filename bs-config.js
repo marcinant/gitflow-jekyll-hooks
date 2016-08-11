@@ -48,7 +48,7 @@ module.exports = {
 	    "fn": function(event, file){		
 		if(event === 'change') {
 		    console.log('jekyll:', file);
-		    cp.spawn('jekyll', ['build', '--config' ,'_config.yml,../_config.yml', '-s', '../', '-d', './_site/', '--incremental', '--quiet'], {stdio: 'inherit'}).on('close', function(code){
+		    cp.spawn('jekyll', ['build', '--config' ,'config.yml,../_config.yml', '-s', '../', '-d', './_site/', '--incremental', '--quiet'], {stdio: 'inherit'}).on('close', function(code){
 			if (code > 0) {
 			    console.log('child process exited with code: ' + code);
 			}
