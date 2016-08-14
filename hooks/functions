@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+#
+# gitflow specific common functionality
+#
+
+# Function used to check if the repository is git-flow enabled.
+gitflow_has_master_configured() {
+	local master
+
+	master=$(git config --get gitflow.branch.master)
+	[ "$master" != "" ] && git_local_branch_exists "$master"
+}
+
+gitflow_has_develop_configured() {
+	local develop
+
+	develop=$(git config --get gitflow.branch.develop)
+	[ "$develop" != "" ] && git_local_branch_exists "$develop"
+}
+
+gitflow_is_initialized() {
+	gitflow_has_master_configured                    && \
+	gitflow_has_develop_configured                   && \
+	[ "$(git config --get gitflow.branch.master)" != "$(git config --get gitflow.branch.develop)" ] && \
+	$(git config --get-regexp gitflow.prefix >/dev/null 2>&1)
+}
+
+require_gitflow_initialized() {
+	gitflow_is_initialized || git flow init -fd
+	$(git config --get gitflow.prefix.versiontag >/dev/null 2>&1) || git flow init -fd
+}
+
+require_npm_initialized() {
+    if [ -d "$(git rev-parse --git-dir)/node_modules" ]; then
+	(
+	    cd $(git rev-parse --git-dir)
+	    npm install --no-bin-links --no-optional --loglevel silent --depth 0
+	)
+    fi
+}

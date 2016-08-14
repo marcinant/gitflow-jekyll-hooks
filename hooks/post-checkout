@@ -1,25 +1,35 @@
 #!/usr/bin/env bash
 
-echo "Git post-checkout hook args: $@ $(git rev-parse --abbrev-ref HEAD) config: $(git config --get gitflow.branch.develop)"
+# enable debug mode
+if [ "$DEBUG" = "yes" ]; then
+	set -x
+fi
 
-if [ $1 = 0000000000000000000000000000000000000000 ]; then
-    echo "JUST CLONED!!!"
-    (
-	cd $(git rev-parse --git-dir)
-	npm i
-    )
+. $(git rev-parse --git-dir)/functions
+
+# run right after 'git clone'
+if [ "$1" = "0000000000000000000000000000000000000000" ]; then
+    (	
+	# require_nvm_initialized
+	require_npm_initialized
+	require_gitflow_initialized
+   )
 fi
 
 start() {
     (
-	cd $(git rev-parse --git-dir)/hooks
-	npm i
-	npm start
+	cd $(git rev-parse --git-dir)
+	if [ -f "server.js" ]; then
+	    node "server.js"
+	fi
     )
 }
 
 stop() {
-    echo "stop"
+    (
+	cd $(git rev-parse --git-dir)
+	npm stop
+    )    
 }
 
 if [ ! -z ${CLOCK+x} ]; then
@@ -33,14 +43,9 @@ if [ ! -z ${CLOCK+x} ]; then
             stop
             ;;
 	*)
-            echo
-            echo "Usage: $0 { in | out }"
-            echo
+            echo $"Usage: $0 {start|stop}"
             exit 1
-            ;;
     esac
 fi
 
 exit 0
-
-
