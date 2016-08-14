@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-echo "Git post-checkout hook."
+echo "Git post-checkout hook args: $@ $(git rev-parse --abbrev-ref HEAD) config: $(git config --get gitflow.branch.develop)"
+
+if [ $1 = 0000000000000000000000000000000000000000 ]; then
+    echo "JUST CLONED!!!"
+    (
+	cd $(git rev-parse --git-dir)
+	npm i
+    )
+fi
 
 start() {
     (
@@ -11,7 +19,7 @@ start() {
 }
 
 stop() {
-
+    echo "stop"
 }
 
 if [ ! -z ${CLOCK+x} ]; then
