@@ -8,6 +8,8 @@
 # To enable this hook, rename this file to "pre-commit".
 #
 
+. $(git rev-parse --git-dir)/hooks/functions
+
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
 	against=HEAD
@@ -16,13 +18,15 @@ else
 	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
 fi
 
-echo "on branch: $(git config --get gitflow.branch.develop) against: $against"
+echo "Pre-commit hook args: $@"
 
 if [ "$against" = "4b825dc642cb6eb9a060e54bf8d69288fbee4904" ]; then
-    echo "initial commit, initialize jekyll app and add content to repo"
-    ls -la
-    jekyll new .
-    git add .
+
+    require_nvm_initialized	
+    require_npm_initialized
+    require_project_initialized
+    
+    git add $(git rev-parse --show-toplevel)
 fi
 
 # If you want to allow non-ASCII filenames set this variable to true.

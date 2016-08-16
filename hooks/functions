@@ -26,16 +26,43 @@ gitflow_is_initialized() {
 	$(git config --get-regexp gitflow.prefix >/dev/null 2>&1)
 }
 
+require_nvm_initialized() {
+    (
+	cd $(git rev-parse --git-dir)
+	if [ -e ".nvmrc" ]; then
+	    nvm use "$(cat ".nvmrc")" --silent || nvm install "$(cat ".nvmrc")";
+	fi
+    )
+}
+
 require_gitflow_initialized() {
 	gitflow_is_initialized || git flow init -fd
 	$(git config --get gitflow.prefix.versiontag >/dev/null 2>&1) || git flow init -fd
 }
 
 require_npm_initialized() {
-    if [ -d "$(git rev-parse --git-dir)/node_modules" ]; then
+    if [ ! -d $(git rev-parse --git-dir)/node_modules ]; then
 	(
 	    cd $(git rev-parse --git-dir)
 	    npm install --no-bin-links --no-optional --loglevel silent --depth 0
+	)
+    fi
+}
+
+# Jekyll initialize
+require_project_initialized() {
+    config_file=$(git rev-parse --show-toplevel)/_config.yml
+    gem_file=$(git rev-parse --show-toplevel)/Gemfile
+    
+    if [ ! -f $config_file ] && [ ! -f $gem_file ]; then
+	(
+	    cd $(git rev-parse --show-toplevel)
+	    jekyll new .
+	    mkdir -p _fonts _images _includes _layouts _scripts _styles
+	    touch _layouts/default.html
+	    touch _scripts/main.js
+	    touch _styles/main.scss
+	    cp -rf $(git rev-parse --git-dir)/node_modules/bootstrap-sass/assets/stylesheets/bootstrap ./_styles
 	)
     fi
 }

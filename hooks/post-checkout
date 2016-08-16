@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 
+echo "Post-checkout hook."
+
 # enable debug mode
 if [ "$DEBUG" = "yes" ]; then
 	set -x
 fi
 
-. $(git rev-parse --git-dir)/functions
+. $(git rev-parse --git-dir)/hooks/functions
 
 # run right after 'git clone'
 if [ "$1" = "0000000000000000000000000000000000000000" ]; then
     (	
-	# require_nvm_initialized
+	require_nvm_initialized
 	require_npm_initialized
 	require_gitflow_initialized
    )
@@ -20,7 +22,14 @@ start() {
     (
 	cd $(git rev-parse --git-dir)
 	if [ -f "server.js" ]; then
-	    node "server.js"
+	    # node "server.js"
+	    # jekyll build -s ../ -d ./_site
+#	    cp ../_scripts/*.js ./_site/assets/scripts/ 2>/dev/null || :
+	    # if [ -e ../_styles/main.scss ]; then
+	    # 	node-sass ../_styles/main.scss ./_site/main.css;
+	    # fi
+	    NODE_ENV='development' nohup node server.js > devel.log 2>&1& echo $! > devel.pid 
+	    # npm start
 	fi
     )
 }

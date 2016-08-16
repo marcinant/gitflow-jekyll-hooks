@@ -1,20 +1,26 @@
 {
-    "name": "gitflow-jekyll-hooks",
-    "license": "(MIT OR Apache-2.0)",
-    "dependencies": {
-	"browser-sync": "^2.14.0",
-	"fs-extra": "^0.30.0",
-	"node-sass": "^3.8.0",
-	"semver": "^5.3.0"	
-    },
-    "repository": {
-	"type": "git",
-	"url": "https://github.com/marcinant/gitflow-jekyll-hooks.git"
-    },
-    "scripts": {
-	"ppprepublish": "if [ -e ../styles/main.scss ]; then node-sass ../_styles/main.scss | postcss -c ./postcss.json; fi",
-	"ppprestart": "jekyll build -s ../ -d ./_site && mkdir -p ./_site/assets/scripts && cp ../_scripts/*.js ./_site/assets/scripts/ 2>/dev/null || : && if [ -e ../_styles/main.scss ]; then node-sass ../_styles/main.scss ./_site/main.css; fi",
-	"ppstart": "node server.js $npm_package_name",
-	"ppstop": "killall -SIGINT $npm_package_name"
-    }
+  "name": "gitflow-jekyll-hooks",
+  "license": "(MIT OR Apache-2.0)",
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "browser-sync": "^2.14.0",
+    "child-process-promise": "^2.1.0",
+    "fs-extra": "^0.30.0",
+    "fs-promise": "^0.5.0",
+    "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^2.0.0",
+    "node-sass": "^3.8.0",
+    "rmfr": "^1.0.1",
+    "semver": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcinant/gitflow-jekyll-hooks.git"
+  },
+  "scripts": {
+    "ppprepublish": "if [ -e ../styles/main.scss ]; then node-sass ../_styles/main.scss | postcss -c ./postcss.json; fi",
+    "pprestart": "cp ../_scripts/*.js ./_site/assets/scripts/ 2>/dev/null || : && if [ -e ../_styles/main.scss ]; then node-sass ../_styles/main.scss ./_site/main.css; fi",
+    "pstart": "node server.js $npm_package_name",
+    "pstop": "killall -SIGINT $npm_package_name"
+  }
 }
