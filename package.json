@@ -19,8 +19,6 @@
   },
   "scripts": {
     "ppprepublish": "if [ -e ../styles/main.scss ]; then node-sass ../_styles/main.scss | postcss -c ./postcss.json; fi",
-    "pprestart": "cp ../_scripts/*.js ./_site/assets/scripts/ 2>/dev/null || : && if [ -e ../_styles/main.scss ]; then node-sass ../_styles/main.scss ./_site/main.css; fi",
-    "pstart": "node server.js $npm_package_name",
     "pstop": "killall -SIGINT $npm_package_name"
   }
 }
