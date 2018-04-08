@@ -5,6 +5,9 @@
 #+CATEGORY: Web Development
 
 * Some useful hooks for [[https://github.com/petervanderdoes/gitflow][GitFlow AVH Edition]]
+
+  #+ATTR_HTML: title="Greenkeeper badge"
+  [[https://greenkeeper.io/][file:https://badges.greenkeeper.io/marcinant/gitflow-jekyll-hooks.svg]]
   :PROPERTIES:
   :CREATED:  [2016-08-10 Wed 23:04]
   :END:
